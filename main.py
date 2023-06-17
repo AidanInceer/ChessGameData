@@ -7,7 +7,7 @@ import pandas as pd
 import requests
 
 
-def get_games(request):
+def chessgamedata(request):
     """Responds to any HTTP request.
     Args:
         request (flask.Request): HTTP request object.
