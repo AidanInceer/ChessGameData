@@ -41,5 +41,5 @@ def get_games(request):
     return "SUCCESS"
 
 
-if __name__ == '__main__':
-    get_games("Ainceer")
+# if __name__ == '__main__':
+#     get_games("Ainceer")
