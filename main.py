@@ -17,7 +17,7 @@ def chessgamedata(request):
         `make_response <http://flask.pocoo.org/docs/1.0/api/#flask.Flask.make_response>`.
     """
 
-    username = request
+    username = request.args.get("username")
     print(username)
 
     urls = chessdotcom.get_player_game_archives(username).json
