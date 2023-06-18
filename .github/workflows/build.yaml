@@ -3,13 +3,13 @@ name: Deploy Cloud Function
 
 env:
   PROJECT: united-axle-390115
-  
+
 on:
   push:
     branches: [ "master" ]
 
 jobs:
-  build:
+  deploy:
     runs-on: 'ubuntu-latest'
 
     permissions:
@@ -36,3 +36,7 @@ jobs:
         memory_mb: '256'
         project_id:  ${{env.PROJECT}}
         entry_point: extract_game_data
+        timeout: 300
+        min_instances: 0
+        max_instances: 1
+
