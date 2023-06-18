@@ -14,7 +14,7 @@ on:
       - master
 
 jobs:
-  build:
+  Build:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,7 +30,7 @@ jobs:
     - name: Mark as a success
       run: exit 0
 
-  deploy:
+  Deploy:
     runs-on: ubuntu-latest
 
     permissions:
@@ -40,13 +40,13 @@ jobs:
     steps:
     - uses: 'actions/checkout@v3'
 
-    - id: Authenticate GCP
+    - id: Authenticate-GCP
       if: github.ref == 'refs/heads/master'
       uses: 'google-github-actions/auth@v1'
       with:
         credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
-    - id: Deploy GCP
+    - id: Deploy-GCP
       if: github.ref == 'refs/heads/master'
       uses: google-github-actions/deploy-cloud-functions@main
       with:
