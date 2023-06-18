@@ -18,6 +18,7 @@ jobs:
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
       with:
+        token_format: 'access_token'
         workload_identity_provider: 'projects/561310818303/locations/global/workloadIdentityPools/my-pool/my-provider'
         service_account: 'united-axle-390115@appspot.gserviceaccount.com'
 
