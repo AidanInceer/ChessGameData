@@ -19,11 +19,61 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up Python 3.9
+    
+    - id: Set-Up
       uses: actions/setup-python@v3
       with:
         python-version: "3.9"
-    - name: Install dependencies
+        
+    - id: Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+  Lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - id: Set-Up
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.9"
+        
+    - id: Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+  Test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - id: Set-Up
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.9"
+        
+    - id: Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+  Scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - id: Set-Up
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.9"
+        
+    - id: Dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
