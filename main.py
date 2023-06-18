@@ -31,15 +31,7 @@ def extract_game_data(request):
     return f"File uploaded to {blob_name}."
 
 def upload_blob(data, blob_name):
-    """_summary_
 
-    Args:
-        data (_type_): _description_
-        blob_name (_type_): _description_
-
-    Returns:
-        _type_: _description_
-    """
     storage_client = storage.Client()
     bucket = storage_client.get_bucket("chess-json-data")
     blob = bucket.blob(blob_name)
