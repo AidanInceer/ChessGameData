@@ -1,10 +1,12 @@
 from io import StringIO
 
+import json
 import chess
 import chess.pgn
 import chessdotcom
 import requests
-from src.utils.gcs import upload_blob
+
+from google.cloud import storage
 
 def extract_game_data(request):
     """Responds to any HTTP request.
@@ -28,6 +30,24 @@ def extract_game_data(request):
         blob_name = upload_blob(data=headers, blob_name=f"{username}-{time_control}-{num}.json")
     return f"File uploaded to {blob_name}."
 
+def upload_blob(data, blob_name):
+    """_summary_
+
+    Args:
+        data (_type_): _description_
+        blob_name (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    storage_client = storage.Client()
+    bucket = storage_client.get_bucket("chess-json-data")
+    blob = bucket.blob(blob_name)
+
+    blob.upload_from_string(data=json.dumps(data),content_type='application/json')
+
+    
+    return blob_name
 
 
 
