@@ -1,0 +1,37 @@
+
+name: Deploy Cloud Function
+
+env:
+  PROJECT: united-axle-390115
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: 'actions/checkout@v3'
+
+    - name: Setup GCP Service Account
+      uses: google-github-actions/setup-gcloud@master
+      with:
+        project_id: ${{env.PROJECT}}
+        service_account_key: ${{ secrets.GCP_SA }}
+        export_default_credentials: true
+
+    - name: deploy cloud function
+      id: deploy
+      uses: google-github-actions/deploy-cloud-functions@main
+      with:
+        name: extract_game_data
+        region: europe-west2
+        runtime: python39
+        memory_mb: '256'
+        project_id:  ${{env.PROJECT}}
+        entry_point: functions.extract_game_data
+    
+    - name: make the url aunthenticated
+      run: |
+        gcloud functions add-iam-policy-binding extract_game_data --member="allUsers" --role="roles/cloudfunctions.invoker"
