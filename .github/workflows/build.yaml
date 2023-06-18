@@ -18,13 +18,12 @@ jobs:
     steps:
     - uses: 'actions/checkout@v3'
 
+    
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v1'
       with:
-        token_format: 'access_token'
-        workload_identity_provider: 'projects/561310818303/locations/global/workloadIdentityPools/my-pool/providers/chess-app-provider'
-        service_account: 'app-engine@united-axle-390115.iam.gserviceaccount.com'
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
     - name: deploy cloud function
       id: deploy
