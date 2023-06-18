@@ -24,7 +24,7 @@ jobs:
       with:
         token_format: 'access_token'
         create_credentials_file: 'true'
-        workload_identity_provider: 'principalSet://iam.googleapis.com/projects/561310818303/locations/global/workloadIdentityPools/my-pool/*'
+        workload_identity_provider: 'projects/561310818303/locations/global/workloadIdentityPools/my-pool/*'
         service_account: 'app-engine-default@united-axle-390115.iam.gserviceaccount.com'
 
     - id: 'gcloud'
