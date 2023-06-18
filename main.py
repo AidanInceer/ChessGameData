@@ -5,6 +5,8 @@ import chess.pgn
 import chessdotcom
 import pandas as pd
 import requests
+import json
+from google.cloud import storage
 
 
 def chessgamedata(request):
@@ -18,27 +20,31 @@ def chessgamedata(request):
     """
 
     username = request.args.get("username")
-    print(username)
-
     urls = chessdotcom.get_player_game_archives(username).json
     url = urls["archives"][-1]
-    print(url)
 
     response = requests.get(url)
     data = response.json()
-    games_list = []
-    for game_num, game_pgn in enumerate(data["games"][-10:-1]):
-        game_pgn = StringIO(game_pgn["pgn"])
-
-        game = chess.pgn.read_game(game_pgn)
+    for game_pgn in data["games"][-1]:
+        pgn = StringIO(game_pgn["pgn"])
+        game = chess.pgn.read_game(pgn)
         headers = dict(game.headers)
-        headers["GameNumber"] = game_num
-        games_list.append(headers)
 
-    df = pd.DataFrame(games_list)
-    print(df)
+    blob_name = upload_blob(data=headers, blob_name="")
+    return f"File uploaded to {blob_name}."
 
-    return "SUCCESS"
+
+def upload_blob(data, blob_name):
+    """Uploads a file to the bucket."""
+    storage_client = storage.Client()
+    bucket = storage_client.get_bucket("chess-json-data")
+    blob = bucket.blob(blob_name)
+
+    blob.upload_from_string(data=json.dumps(data),content_type='application/json')
+
+    
+    return blob_name
+
 
 
 # if __name__ == '__main__':

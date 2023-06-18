@@ -4,3 +4,4 @@ chess==1.9.4
 chess.com==2.0.3
 Flask==2.2.2
 pandas==1.5.2
+google-cloud-storage
