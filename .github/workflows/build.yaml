@@ -25,7 +25,7 @@ jobs:
         token_format: 'access_token'
         create_credentials_file: 'true'
         workload_identity_provider: 'projects/561310818303/locations/global/workloadIdentityPools/my-pool/providers/chess-app-provider'
-        service_account: 'app-engine-default@united-axle-390115.iam.gserviceaccount.com'
+        service_account: 'app-engine@united-axle-390115.iam.gserviceaccount.com'
 
     - id: 'gcloud'
       name: 'gcloud'
