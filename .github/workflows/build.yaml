@@ -24,7 +24,7 @@ jobs:
       with:
         token_format: 'access_token'
         workload_identity_provider: 'projects/561310818303/locations/global/workloadIdentityPools/my-pool/my-provider'
-        service_account: 'united-axle-390115@appspot.gserviceaccount.com'
+        service_account: 'app-engine-default@united-axle-390115.iam.gserviceaccount.com'
 
     - name: deploy cloud function
       id: deploy
