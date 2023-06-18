@@ -3,6 +3,7 @@ name: Deploy Cloud Function
 
 env:
   PROJECT: united-axle-390115
+  
 on:
   push:
     branches: [ "master" ]
@@ -34,4 +35,4 @@ jobs:
         runtime: python39
         memory_mb: '256'
         project_id:  ${{env.PROJECT}}
-        entry_point: functions.extract_game_data
+        entry_point: extract_game_data
