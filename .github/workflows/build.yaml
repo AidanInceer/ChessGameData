@@ -23,7 +23,7 @@ jobs:
       uses: 'google-github-actions/auth@v1'
       with:
         token_format: 'access_token'
-        workload_identity_provider: 'projects/561310818303/locations/global/workloadIdentityPools/my-pool/my-provider'
+        workload_identity_provider: 'principalSet://iam.googleapis.com/projects/561310818303/locations/global/workloadIdentityPools/my-pool/*'
         service_account: 'app-engine-default@united-axle-390115.iam.gserviceaccount.com'
 
     - name: deploy cloud function
