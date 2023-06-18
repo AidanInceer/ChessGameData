@@ -25,12 +25,15 @@ def chessgamedata(request):
 
     response = requests.get(url)
     data = response.json()
-    for game_pgn in data["games"][-1]:
+    game_data = []
+    for game_pgn in data["games"][-3:-1]:
         pgn = StringIO(game_pgn["pgn"])
         game = chess.pgn.read_game(pgn)
         headers = dict(game.headers)
+        game_data.append(headers)
 
-    blob_name = upload_blob(data=headers, blob_name="")
+    for num, game in enumerate(game_data):
+        blob_name = upload_blob(data=game, blob_name=f"data-{num}.json")
     return f"File uploaded to {blob_name}."
 
 
@@ -46,6 +49,6 @@ def upload_blob(data, blob_name):
     return blob_name
 
 
-
+# Run to test Locally
 # if __name__ == '__main__':
 #     chessgamedata("Ainceer")
