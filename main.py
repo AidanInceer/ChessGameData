@@ -31,9 +31,10 @@ def chessgamedata(request):
         game = chess.pgn.read_game(pgn)
         headers = dict(game.headers)
         game_data.append(headers)
+        time_control = headers['TimeControl']
 
     for num, game in enumerate(game_data):
-        blob_name = upload_blob(data=game, blob_name=f"{username}chess-game-{num}.json")
+        blob_name = upload_blob(data=game, blob_name=f"{username}-{time_control}-{num}.json")
     return f"File uploaded to {blob_name}."
 
 
