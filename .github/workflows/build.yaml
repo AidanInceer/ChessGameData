@@ -14,12 +14,12 @@ jobs:
     steps:
     - uses: 'actions/checkout@v3'
 
-    - name: Setup GCP Service Account
-      uses: google-github-actions/setup-gcloud@main
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v1'
       with:
-        project_id: ${{env.PROJECT}}
-        service_account_key: ${{ secrets.GCP_SA }}
-        export_default_credentials: true
+        workload_identity_provider: 'projects/561310818303/locations/global/workloadIdentityPools/my-pool'
+        service_account: 'united-axle-390115@appspot.gserviceaccount.com'
 
     - name: deploy cloud function
       id: deploy
@@ -31,7 +31,3 @@ jobs:
         memory_mb: '256'
         project_id:  ${{env.PROJECT}}
         entry_point: functions.extract_game_data
-    
-    - name: make the url aunthenticated
-      run: |
-        gcloud functions add-iam-policy-binding extract_game_data --member="allUsers" --role="roles/cloudfunctions.invoker"
