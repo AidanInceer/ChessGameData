@@ -24,7 +24,7 @@ def extract_game_data(request):
     url = urls["archives"][-1]
     response = requests.get(url)
     data = response.json()
-    
+
     for num, game_pgn in enumerate(data["games"][-games::]):
         pgn = StringIO(game_pgn["pgn"])
         game = chess.pgn.read_game(pgn)
@@ -33,7 +33,7 @@ def extract_game_data(request):
         game_data = {
             "username":username,
             "game_num":num,
-            "pgn":pgn,
+            "pgn":game_pgn["pgn"],
             "headers":headers
         }
         blob_name = upload_blob(data=game_data, blob_name=f"{username}-{time_control}-{num}.json")
