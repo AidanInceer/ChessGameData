@@ -14,7 +14,7 @@ class TransformUserData:
     logger: Logger
     config: Config
 
-    def create_gcs_dict_object(self, game_num, game_pgn):
+    def create_gcs_dict_object(self, game_num, game_pgn) -> tuple[dict, str]:
         pgn = StringIO(game_pgn["pgn"])
         game = chess.pgn.read_game(pgn)
 
@@ -37,6 +37,6 @@ class TransformUserData:
         return (game_data, file_name)
 
     @staticmethod
-    def generate_unique_id(username: str, game_date: str, game_time: str):
-        base_id = username + game_date + game_time
-        return hashlib.sha1(base_id.encode())
+    def generate_unique_id(username: str, game_date: str, game_time: str) -> str:
+        base_id = f"{username}_{game_date}_{game_time}"
+        return str(hashlib.sha1(base_id.encode()))
