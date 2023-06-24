@@ -41,4 +41,4 @@ class TransformUserData:
         base_id = f"{username}_{game_date}_{game_time}"
         hash_id = hashlib.sha1(base_id.encode())
 
-        return str(hash_id.digest())
+        return str(hash_id.hexdigest())
