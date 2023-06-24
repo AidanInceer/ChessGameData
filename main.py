@@ -35,3 +35,5 @@ def extract_game_data(request: flask.Request):
 
         # Upload json file to gcs bucket.
         GCSLoader.upload_blob(data, file_name, BUCKET, CONTENT_TYPE)
+
+    return f"All files successfully uploaded to bucket: {BUCKET}."
