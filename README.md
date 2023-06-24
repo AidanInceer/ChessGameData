@@ -1,1 +1,5 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AidanInceer_ExtractGameData&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AidanInceer_ExtractGameData)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=AidanInceer_ExtractGameData&metric=bugs)](https://sonarcloud.io/summary/new_code?id=AidanInceer_ExtractGameData)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=AidanInceer_ExtractGameData&metric=coverage)](https://sonarcloud.io/summary/new_code?id=AidanInceer_ExtractGameData)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=AidanInceer_ExtractGameData&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=AidanInceer_ExtractGameData)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=AidanInceer_ExtractGameData&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=AidanInceer_ExtractGameData)

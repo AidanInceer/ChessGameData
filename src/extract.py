@@ -2,7 +2,7 @@ import json
 from dataclasses import dataclass
 
 import chessdotcom
-import requests
+import requests  # type: ignore
 
 from src.utils.config import Config
 from src.utils.logger import Logger
@@ -10,7 +10,7 @@ from src.utils.logger import Logger
 
 @dataclass
 class ExtractGameData:
-    logger: Logger
+    log: Logger
     config: Config
 
     def extract_user_games(self) -> list:
