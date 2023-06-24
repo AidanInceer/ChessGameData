@@ -1,14 +1,16 @@
-from io import StringIO
+import flask
 
-import json
-import chess
-import chess.pgn
-import chessdotcom
-import requests
+from src.extract import ExtractGameData
+from src.load import GCSLoader
+from src.transform import TransformUserData
+from src.utils.logger import create_logger
+from src.utils.request_parser import Parser
 
-from google.cloud import storage
+BUCKET: str = "chess-json-data"
+CONTENT_TYPE: str = "application/json"
 
-def extract_game_data(request):
+
+def extract_game_data(request: flask.Request):
     """Responds to any HTTP request.
     Args:
         request (flask.Request): HTTP request object.
@@ -16,43 +18,19 @@ def extract_game_data(request):
         ...
     """
 
-    username = request.args.get("username")
-    games = int(request.args.get("games"))
-    
-    
-    urls = chessdotcom.get_player_game_archives(username).json
-    url = urls["archives"][-1]
-    response = requests.get(url)
-    data = response.json()
+    # setup environment:
+    logger = create_logger()
+    config = Parser(request, logger).parse_request()
 
-    for num, game_pgn in enumerate(data["games"][-games::]):
-        pgn = StringIO(game_pgn["pgn"])
-        game = chess.pgn.read_game(pgn)
-        headers = dict(game.headers)
-        time_control = headers['TimeControl']
-        game_data = {
-            "username":username,
-            "game_num":num,
-            "pgn":game_pgn["pgn"],
-            "headers":headers
-        }
-        blob_name = upload_blob(data=game_data, blob_name=f"{username}-{time_control}-{num}.json")
-    return f"File uploaded to {blob_name}."
+    # Extract games data
+    extractor = ExtractGameData(logger, config)
+    data = extractor.extract_user_games()
 
-def upload_blob(data, blob_name: str) -> str:
+    # Clean and Transform the extracted games.
+    # - pgn is a file format used in chess to store move and game information.
+    for game_num, game_pgn in enumerate(data):
+        tud = TransformUserData(logger, config)
+        data, file_name = tud.create_gcs_dict_object(game_num, game_pgn)
 
-    storage_client = storage.Client()
-    bucket = storage_client.get_bucket("chess-json-data")
-    blob = bucket.blob(blob_name)
-
-    blob.upload_from_string(data=json.dumps(data),content_type='application/json')
-
-    
-    return blob_name
-
-
-
-
-# Run to test Locally
-# if __name__ == '__main__':
-#     chessgamedata("Ainceer")
+        # Upload json file to gcs bucket.
+        GCSLoader.upload_blob(data, file_name, BUCKET, CONTENT_TYPE)

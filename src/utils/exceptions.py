@@ -1,0 +1,2 @@
+class InvalidRequestArgument(Exception):
+    pass
