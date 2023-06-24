@@ -13,7 +13,7 @@ from src.utils.logger import Logger
 
 @dataclass
 class TransformUserData:
-    logger: Logger
+    log: Logger
     config: Config
 
     def create_gcs_dict_object(self, game_num: int, game_pgn: dict) -> tuple[Any, Any]:
