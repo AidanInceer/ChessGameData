@@ -39,4 +39,6 @@ class TransformUserData:
     @staticmethod
     def generate_unique_id(username: str, game_date: str, game_time: str) -> str:
         base_id = f"{username}_{game_date}_{game_time}"
-        return str(hashlib.sha1(base_id.encode()))
+        hash_id = hashlib.sha1(base_id.encode())
+
+        return str(hash_id.digest())
