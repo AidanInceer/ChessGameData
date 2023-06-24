@@ -18,7 +18,7 @@ class TransformUserData:
 
     def create_gcs_dict_object(self, game_num: int, game_pgn: dict) -> tuple[Any, Any]:
         game = self.read_chess_game_from_string(game_pgn)
-        headers = game.headers  # type: ignore
+        headers = dict(game.headers)  # type: ignore
 
         game_id = self.generate_unique_id(
             self.config.username, headers["UTCDate"], headers["UTCTime"]
