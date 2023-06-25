@@ -36,7 +36,7 @@ class TransformUserData:
         file_name = f"{game_id}.json"
         return (game_data, file_name)
 
-    def read_chess_game_from_string(self, game_pgn) -> Optional[Game]:
+    def read_chess_game_from_string(self, game_pgn: dict) -> Optional[Game]:
         pgn = StringIO(game_pgn["pgn"])
         return chess.pgn.read_game(pgn)
 
