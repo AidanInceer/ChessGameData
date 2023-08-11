@@ -23,15 +23,14 @@ class TransformUserData:
         game_id = self.generate_unique_id(
             self.config.username, headers["UTCDate"], headers["UTCTime"]
         )
-        metadata = {
+        game_data = {
             "game_id": game_id,
             "username": self.config.username,
             "depth": self.config.depth,
             "pgn": game_pgn["pgn"],
             "game_num": game_num,
+            "headers": headers,
         }
-
-        game_data = metadata | headers
 
         file_name = f"{game_id}.json"
         return (game_data, file_name)
